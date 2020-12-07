@@ -609,7 +609,7 @@ var styles$5 = function (_a) {
         anchorLink: {},
         toolbar: {},
         floatingToolbar: {
-            position: "absolute",
+            position: "fixed",
             paddingTop: "6px",
             paddingBottom: "6px",
             "& button": {
@@ -655,30 +655,6 @@ var findLinkEntities = function (contentBlock, callback, contentState) {
             contentState.getEntity(entityKey).getType() === "LINK");
     }, callback);
 };
-// const findMentionEntities = (
-//   contentBlock: any,
-//   callback: any,
-//   contentState: any
-// ) => {
-//   console.log(JSON.stringify(contentBlock));
-//   console.log(JSON.stringify(contentState));
-//   console.log(callback);
-//   contentBlock.findEntityRanges((character: any) => {
-//     const entityKey = character.getEntity();
-//     return (
-//       entityKey !== null &&
-//       contentState.getEntity(entityKey).getType() === "LINK"
-//     );
-//   }, callback);
-//   contentBlock.findEntityRanges((character: any) => {
-//     const entityKey = character.getEntity();
-//     return (
-//       entityKey !== null &&
-//       contentState.getEntity(entityKey).getType() === "AC_ITEM"
-//     );
-//   }, callback);
-//   findDecoWithRegex(/\@[\w ]+\@/g, contentBlock, callback);
-// };
 var findDecoWithRegex = function (regex, contentBlock, callback) {
     var text = contentBlock.getText();
     var matchArr, start;
@@ -1501,15 +1477,6 @@ var MUIRichTextEditor = function (props, ref) {
                     left: state.toolbarPosition.left,
                 } },
                 React__default.createElement(Toolbar, { id: editorId, editorState: editorState, onClick: handleToolbarClick, controls: inlineToolbarControls, customControls: customControls, inlineMode: true, isActive: true }))) : null,
-            props.floatingToolbar &&
-                props.floatingToolbarPosition &&
-                props.floatingToolbarControls &&
-                editable ? (React__default.createElement(Paper, { className: classes.floatingToolbar, style: props.floatingToolbarPosition },
-                React__default.createElement(Toolbar, { id: editorId, editorState: editorState, onClick: handleToolbarClick, controls: props.floatingToolbarControls, customControls: customControls, 
-                    // className={classes.floatingToolbar}
-                    size: props.toolbarButtonSize, 
-                    // inlineMode={true}
-                    isActive: true }))) : null,
             renderToolbar ? (React__default.createElement(Toolbar, { id: editorId, editorState: editorState, onClick: handleToolbarClick, controls: controls, customControls: customControls, className: classes.toolbar, disabled: !editable, size: props.toolbarButtonSize, isActive: focus })) : null,
             placeholder,
             React__default.createElement("div", { id: editorId + "-editor", className: classes.editor },
@@ -1518,13 +1485,17 @@ var MUIRichTextEditor = function (props, ref) {
                         _c[classes.error] = props.error,
                         _c)), onMouseDown: handleMouseDown, onBlur: handleBlur },
                     React__default.createElement(draftJs.Editor, __assign({ blockRenderMap: getBlockMap(), blockRendererFn: blockRenderer, customStyleFn: styleRenderer, editorState: editorState, onChange: handleChange, onFocus: handleEditorFocus, readOnly: props.readOnly, handleKeyCommand: handleKeyCommand, handleBeforeInput: handleBeforeInput, handlePastedText: handlePastedText, handleReturn: handleReturn, keyBindingFn: keyBindingFn, ref: editorRef }, props.draftEditorProps)))),
+            props.floatingToolbar &&
+                props.floatingToolbarPosition &&
+                props.floatingToolbarControls &&
+                editable ? (React__default.createElement(Paper, { className: classes.floatingToolbar, style: props.floatingToolbarPosition },
+                React__default.createElement(Toolbar, { id: editorId, editorState: editorState, onClick: handleToolbarClick, controls: props.floatingToolbarControls, customControls: customControls, size: props.toolbarButtonSize, isActive: true }))) : null,
             state.anchorUrlPopover ? (React__default.createElement(UrlPopover$1, { data: state.urlData, anchor: state.anchorUrlPopover, onConfirm: handleConfirmPrompt, isMedia: state.urlIsMedia })) : null)));
 };
 var MUIRichTextEditor$1 = styles$6.withStyles(styles$5, {
     withTheme: true,
     name: "MUIRichTextEditor",
 })(React.forwardRef(MUIRichTextEditor));
-//# sourceMappingURL=MUIRichTextEditor.js.map
 
 exports.default = MUIRichTextEditor$1;
 //# sourceMappingURL=index.js.map
