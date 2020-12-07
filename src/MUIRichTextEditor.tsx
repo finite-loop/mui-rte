@@ -218,7 +218,7 @@ const styles = ({ spacing, typography, palette }: Theme) =>
     anchorLink: {},
     toolbar: {},
     floatingToolbar: {
-      position: "absolute",
+      position: "fixed",
       paddingTop: "6px",
       paddingBottom: "6px",
       "& button": {
@@ -272,32 +272,6 @@ const findLinkEntities = (
     );
   }, callback);
 };
-
-// const findMentionEntities = (
-//   contentBlock: any,
-//   callback: any,
-//   contentState: any
-// ) => {
-//   console.log(JSON.stringify(contentBlock));
-//   console.log(JSON.stringify(contentState));
-//   console.log(callback);
-//   contentBlock.findEntityRanges((character: any) => {
-//     const entityKey = character.getEntity();
-//     return (
-//       entityKey !== null &&
-//       contentState.getEntity(entityKey).getType() === "LINK"
-//     );
-//   }, callback);
-//   contentBlock.findEntityRanges((character: any) => {
-//     const entityKey = character.getEntity();
-
-//     return (
-//       entityKey !== null &&
-//       contentState.getEntity(entityKey).getType() === "AC_ITEM"
-//     );
-//   }, callback);
-//   findDecoWithRegex(/\@[\w ]+\@/g, contentBlock, callback);
-// };
 
 const findDecoWithRegex = (regex: RegExp, contentBlock: any, callback: any) => {
   const text = contentBlock.getText();
@@ -1498,27 +1472,6 @@ const MUIRichTextEditor: RefForwardingComponent<
             />
           </Paper>
         ) : null}
-        {props.floatingToolbar &&
-        props.floatingToolbarPosition &&
-        props.floatingToolbarControls &&
-        editable ? (
-          <Paper
-            className={classes.floatingToolbar}
-            style={props.floatingToolbarPosition}
-          >
-            <Toolbar
-              id={editorId}
-              editorState={editorState}
-              onClick={handleToolbarClick}
-              controls={props.floatingToolbarControls}
-              customControls={customControls}
-              // className={classes.floatingToolbar}
-              size={props.toolbarButtonSize}
-              // inlineMode={true}
-              isActive={true}
-            />
-          </Paper>
-        ) : null}
         {renderToolbar ? (
           <Toolbar
             id={editorId}
@@ -1561,6 +1514,27 @@ const MUIRichTextEditor: RefForwardingComponent<
             />
           </div>
         </div>
+
+        {props.floatingToolbar &&
+        props.floatingToolbarPosition &&
+        props.floatingToolbarControls &&
+        editable ? (
+          <Paper
+            className={classes.floatingToolbar}
+            style={props.floatingToolbarPosition}
+          >
+            <Toolbar
+              id={editorId}
+              editorState={editorState}
+              onClick={handleToolbarClick}
+              controls={props.floatingToolbarControls}
+              customControls={customControls}
+              size={props.toolbarButtonSize}
+              isActive={true}
+            />
+          </Paper>
+        ) : null}
+
         {state.anchorUrlPopover ? (
           <UrlPopover
             data={state.urlData}
