@@ -149,6 +149,10 @@ export type TMUIRichTextEditorProps = {
   onChange?: (state: EditorState) => void;
   onFocus?: () => void;
   onBlur?: () => void;
+  autocompleteItemsGenerator?: (
+    searchTerm: string,
+    triggerChar: any
+  ) => TAutocompleteItem[]; // function to generate autocomplete items
 };
 
 interface IMUIRichTextEditorProps
@@ -688,6 +692,13 @@ const MUIRichTextEditor: RefForwardingComponent<
     if (searchTerm.length < autocompleteMinSearchCharCount) {
       return [];
     }
+
+    if (props.autocompleteItemsGenerator)
+      return props.autocompleteItemsGenerator(
+        searchTerm,
+        autocompleteRef.current?.triggerChar
+      );
+
     return autocompleteRef
       .current!.items.filter(
         (item) => item.keys.filter((key) => key.includes(searchTerm)).length > 0
