@@ -94,7 +94,6 @@ var ToolbarButton = function (props) {
     }
     return null;
 };
-//# sourceMappingURL=ToolbarButton.js.map
 
 /**
  * Get the current selection details
@@ -170,7 +169,6 @@ var getLineNumber = function (editorState) {
     return editorState.getCurrentContent().getBlockMap()
         .keySeq().findIndex(function (k) { return k === currentBlockKey; });
 };
-//# sourceMappingURL=utils.js.map
 
 var STYLE_TYPES = [
     {
@@ -350,13 +348,11 @@ var Toolbar = function (props) {
         return (React__default.createElement(ToolbarButton, { id: style.id, editorId: props.id, key: "key-" + style.label, active: active, label: style.label, onClick: action, style: style.style, type: style.type, icon: style.icon, component: style.component, inlineMode: props.inlineMode, disabled: props.disabled, size: props.size }));
     })));
 };
-//# sourceMappingURL=Toolbar.js.map
 
 var Link = function (props) {
     var _a = props.contentState.getEntity(props.entityKey).getData(), url = _a.url, className = _a.className;
     return (React__default.createElement(MuiLink, { href: url, className: className + " editor-anchor", target: "_blank" }, props.children));
 };
-//# sourceMappingURL=Link.js.map
 
 var styles = function (_a) {
     var shadows = _a.shadows;
@@ -421,7 +417,6 @@ var Media = function (props) {
             _a)) }, htmlTag()));
 };
 var Media$1 = styles$6.withStyles(styles, { withTheme: true })(Media);
-//# sourceMappingURL=Media.js.map
 
 var styles$1 = function (_a) {
     var palette = _a.palette;
@@ -437,7 +432,6 @@ var Blockquote = function (props) {
     return (React__default.createElement("div", { className: props.classes.root }, props.children));
 };
 var Blockquote$1 = styles$6.withStyles(styles$1, { withTheme: true })(Blockquote);
-//# sourceMappingURL=Blockquote.js.map
 
 var styles$2 = function (_a) {
     var spacing = _a.spacing, palette = _a.palette;
@@ -452,7 +446,6 @@ var CodeBlock = function (props) {
     return (React__default.createElement("div", { className: props.classes.root }, props.children));
 };
 var CodeBlock$1 = styles$6.withStyles(styles$2, { withTheme: true })(CodeBlock);
-//# sourceMappingURL=CodeBlock.js.map
 
 var styles$3 = function (_a) {
     var spacing = _a.spacing;
@@ -535,7 +528,6 @@ var UrlPopover = function (props) {
                         React__default.createElement(CheckIcon, null)))))));
 };
 var UrlPopover$1 = styles$6.withStyles(styles$3, { withTheme: true })(UrlPopover);
-//# sourceMappingURL=UrlPopover.js.map
 
 var styles$4 = function () {
     return styles$6.createStyles({
@@ -561,7 +553,6 @@ var Autocomplete = function (props) {
         React__default.createElement(List, { dense: true }, props.items.map(function (item, index) { return (React__default.createElement(ListItem, { key: index, className: classes.item, selected: index === props.selectedIndex, onClick: function () { return props.onClick(index); } }, item.content)); }))));
 };
 var Autocomplete$1 = styles$6.withStyles(styles$4, { withTheme: true })(Autocomplete);
-//# sourceMappingURL=Autocomplete.js.map
 
 var styles$5 = function (_a) {
     var spacing = _a.spacing, typography = _a.typography, palette = _a.palette;
@@ -928,9 +919,12 @@ var MUIRichTextEditor = function (props, ref) {
         refocus();
     };
     var getAutocompleteItems = function () {
+        var _a;
         if (searchTerm.length < autocompleteMinSearchCharCount) {
             return [];
         }
+        if (props.autocompleteItemsGenerator)
+            return props.autocompleteItemsGenerator(searchTerm, (_a = autocompleteRef.current) === null || _a === void 0 ? void 0 : _a.triggerChar);
         return autocompleteRef
             .current.items.filter(function (item) { return item.keys.filter(function (key) { return key.includes(searchTerm); }).length > 0; })
             .splice(0, autocompleteLimit);
